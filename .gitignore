@@ -1,0 +1,12 @@
+# This file is a safety net only. The git repository must live in code/,
+# never in this directory. If a repo is ever initialised here by mistake,
+# these rules keep the manuscript and the correspondence out of it.
+manuscript/
+submission/
+reviews/
+zenodo/
+*.tex
+*.pdf
+*.docx
+*.bib
+.DS_Store

@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99e (TeX Live 2026)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: article.aux
+The style file: elsarticle-harv.bst
+Database file #1: refs.bib
+Warning--entry type for "tarasov2026data" isn't style-file defined
+--line 339 of file refs.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty pages in janosi1961
+You've used 34 entries,
+            2990 wiz_defined-function locations,
+            839 strings with 10741 characters,
+and the built_in function-call counts, 21232 in all, are:
+= -- 1663
+> -- 701
+< -- 27
++ -- 280
+- -- 237
+* -- 2252
+:= -- 3063
+add.period$ -- 115
+call.type$ -- 34
+change.case$ -- 247
+chr.to.int$ -- 33
+cite$ -- 35
+duplicate$ -- 1655
+empty$ -- 1642
+format.name$ -- 343
+if$ -- 3989
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 315
+newline$ -- 198
+num.names$ -- 137
+pop$ -- 581
+preamble$ -- 1
+purify$ -- 215
+quote$ -- 0
+skip$ -- 498
+stack$ -- 0
+substring$ -- 865
+swap$ -- 1150
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 285
+warning$ -- 1
+while$ -- 147
+width$ -- 0
+write$ -- 517
+(There were 2 warnings)

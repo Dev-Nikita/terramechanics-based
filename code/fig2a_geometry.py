@@ -14,7 +14,7 @@ ink, mid = "#22292b", "#9aa7ab"
 RED, GRN, BLU, ORG = "#b03030", "#4a7a3a", "#2b6ca3", "#c8811b"
 
 fig, ax = plt.subplots(figsize=(6.9, 3.3))
-ax.set_xlim(-0.55, 5.95); ax.set_ylim(-1.45, 2.55); ax.axis("off"); ax.set_aspect("equal")
+ax.set_xlim(-0.55, 6.25); ax.set_ylim(-1.45, 2.55); ax.axis("off"); ax.set_aspect("equal")
 
 XR, XF, R = 1.30, 4.20, 0.32
 XC = 0.5 * (XR + XF)
@@ -38,6 +38,22 @@ ax.fill_between([CL, CR], HG, 0.34, color="#e8f0e3", zorder=2)
 for x in (CL, CR):
     ax.plot([x, x], [0.34, HG], color=ink, lw=2.8, solid_capstyle="round", zorder=4)
 ax.plot([CL, CR], [HG, HG], color=ink, lw=0.9, ls=(0, (2, 3)), zorder=4)
+
+# ---------------- ruts under the wheels ----------------
+RUT = -0.34
+for xc in (XR, XF):
+    ax.fill_between([xc - 0.30, xc + 0.30], RUT, 0, color="#dcd3bd", zorder=1)
+    ax.plot([xc - 0.30, xc - 0.30, xc + 0.30, xc + 0.30], [0, RUT, RUT, 0],
+            color="#b9ae93", lw=1.0, zorder=2)
+XZ = XF + 0.78
+ax.plot([XF + 0.30, XZ + 0.10], [RUT, RUT], color="#7d7259", lw=0.7,
+        ls=(0, (2, 2)), zorder=6)
+ax.plot([XF + 0.30, XZ + 0.10], [0, 0], color="#7d7259", lw=0.7,
+        ls=(0, (2, 2)), zorder=6)
+ax.annotate("", xy=(XZ, RUT), xytext=(XZ, 0),
+            arrowprops=dict(arrowstyle="<->", lw=1.0, color="#7d7259"), zorder=9)
+ax.text(XZ + 0.12, RUT / 2, r"$z$", fontsize=10.5, ha="left", va="center",
+        color="#5f5742", zorder=9)
 
 # ---------------- wheels and wheel reactions ----------------
 for x in (XR, XF):

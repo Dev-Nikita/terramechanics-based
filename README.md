@@ -1,70 +1,69 @@
-# terramechanics-based
-# Air-cushion-assisted wheeled vehicle on deformable terrain
+# JTERRA-D-26-00107 — проект статьи
 
-Reproduction code for the paper
+Terramechanics-based evaluation of an air-cushion-assisted wheeled vehicle on
+deformable terrain: feasibility limits and the energy-optimal load-relief fraction
 
-> A. Bokhonko, R. Zinko, N. Tarasov. *Terramechanics-based evaluation of an
-> air-cushion-assisted wheeled vehicle on deformable terrain: feasibility limits
-> and the energy-optimal load-relief fraction.* Submitted to the Journal of
-> Terramechanics.
+Статус: ревизия после первого раунда рецензирования. Научная часть готова,
+остаются два технических блокера — см. `submission/TODO_BEFORE_SUBMIT.md`.
 
-## What this repository contains
-
-| File | Purpose |
-|---|---|
-| `terramechanics_model.py` | The complete model. Reproduces every figure, table and number in the paper and the supplementary material. |
-| `fig1_schematic.py` | Draws the force and flow schematic (Fig. 2 of the paper). |
-| `results.json` | Machine-readable dump of all computed values. |
-
-There are no experimental data. The study is analytical and numerical, and this
-repository is the whole of it.
-
-## Reproducing the paper
+## Структура
 
 ```
-python3 -m pip install numpy matplotlib
+<корень проекта>/
+├── article.tex            ГЛАВНЫЙ ФАЙЛ СТАТЬИ — править здесь
+├── supplementary.tex      таблицы S1–S5
+├── refs.bib               библиография, 32 источника, все проверены
+├── elsarticle.cls         класс журнала
+├── elsarticle-harv.bst    стиль библиографии
+├── make_docx.py           сборка DOCX из .tex
+│
+├── figures/               все рисунки: рабочие имена и имена для журнала
+├── build/                 article.pdf, article.docx, supplementary.*
+│
+├── submission/            загружается в Editorial Manager — НЕ публикуется
+│   ├── cover_letter_revision.{md,docx}   письмо на ревизию (использовать это)
+│   ├── cover_letter.{md,docx}            письмо первой подачи (архив)
+│   ├── response_to_reviewers.{md,docx}   постраничный ответ рецензентам
+│   ├── EM_reply_boxes.md                 текст для полей Reply to comment
+│   ├── Highlights.docx, highlights.txt
+│   ├── title_for_editorial_manager.txt   заголовок одной строкой
+│   ├── README_submission.md              полный журнал правок
+│   └── TODO_BEFORE_SUBMIT.md             что осталось сделать
+│
+├── code/                  ЕДИНСТВЕННАЯ папка, уходящая в Git и Zenodo
+├── zenodo/                zenodo_v1.2.0.zip — запасной путь загрузки
+├── reviews/               отзывы и аудиты, локально
+├── git/PUSH_COMMANDS.md   команды публикации — только код
+└── archive/               первая подача, шаблоны elsarticle, старые сборки
+```
+
+## Пересборка статьи
+
+```
+pdflatex article && bibtex article && pdflatex article && pdflatex article
+cp article.pdf build/article.pdf
+python3 make_docx.py article.tex build/article.docx
+```
+
+46 страниц, 0 ошибок, 0 неопределённых ссылок и цитат.
+`article.tex` содержит `\graphicspath{{figures/}}`, поэтому рисунки берутся
+из `figures/` и дублировать их в корень не нужно.
+
+## Воспроизведение расчётов
+
+```
+cd code
+python3 -m pip install -r requirements.txt
 python3 terramechanics_model.py
-python3 fig1_schematic.py
 ```
 
-Runtime is under two minutes on a laptop. Output goes to `fig/` (PDF and PNG)
-and `results.json`, and the console log prints the limit-case verification, the
-force-balance tables, the optima, both sensitivity studies, the speed sweep, the
-contact-patch scenarios, the cross-comparisons and the Monte-Carlo intervals in
-the order they appear in the paper.
+Должны пройти девять аналитических проверок, а `results.json` совпасть с тем,
+что лежит рядом.
 
-## Changing the configuration
+## Правило публикации
 
-Every reported number derives from two dictionaries at the top of
-`terramechanics_model.py`:
-
-- `VEH` — vehicle, cushion and driveline parameters (Table 1 of the paper);
-- `SOILS` — Bekker and shear parameters for the three terrain classes
-  (Table 2 of the paper).
-
-Edit either and re-run. Nothing else needs to be touched.
-
-## Model structure
-
-- `sinkage`, `compaction_resistance` — Bekker pressure–sinkage, with a switch
-  between the flat-plate idealisation and the closed-form rigid-wheel relation.
-- `traction` — Janosi–Hanamoto shear integrated over the contact patch.
-- `cushion` — lumped peripheral-jet lift model and fan power.
-- `evaluate` — assembles the force and power balance at a given load relief.
-- `optimum` — constrained minimisation of total power subject to the
-  traction-to-resistance and rut-depth constraints.
-- `verification` — the seven analytical limit cases of Table S1.
-- `crosscheck_sinkage`, `crosscheck_traction`, `robustness_wheel_model` —
-  the independent comparisons of Section 6.
-- `sens_soil`, `sens_system`, `speed_sweep`, `gamma_sweep`, `monte_carlo` —
-  the uncertainty studies of Sections 5 and 7.
-
-## License
-
-Released under the MIT License. If you use this code, please cite the paper.
-
-## Acknowledgement of tooling
-
-GitHub Copilot was used as a coding assistant during development. All model
-equations, parameter choices and numerical results were derived, checked and
-verified by the authors; see the declaration in the paper.
+Статья, ответы рецензентам и cover letter никогда не попадают в Git.
+Репозиторий инициализируется внутри `code/`, а не в корне проекта. Запись на
+Zenodo привязана к GitHub-репозиторию `Dev-Nikita/terramechanics-based`, то
+есть в архив Zenodo попадает всё содержимое репозитория — ещё одна причина
+держать там только код. Команды и проверки — в `git/PUSH_COMMANDS.md`.

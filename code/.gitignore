@@ -1,0 +1,14 @@
+# generated output
+fig/
+*.png
+*.pdf
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# never publish the manuscript or correspondence
+*.tex
+*.bib
+*.bbl
+*.docx
+*.doc

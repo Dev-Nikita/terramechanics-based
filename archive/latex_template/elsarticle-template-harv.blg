@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99e (TeX Live 2026)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: elsarticle-template-harv.aux
+The style file: elsarticle-harv.bst
+Database file #1: refs.bib
+Warning--I didn't find a database entry for "riyadi2016"
+Warning--I didn't find a database entry for "wang2013"
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty pages in janosi1961
+You've used 32 entries,
+            2990 wiz_defined-function locations,
+            827 strings with 10271 characters,
+and the built_in function-call counts, 20020 in all, are:
+= -- 1561
+> -- 657
+< -- 26
++ -- 263
+- -- 222
+* -- 2120
+:= -- 2884
+add.period$ -- 108
+call.type$ -- 32
+change.case$ -- 232
+chr.to.int$ -- 31
+cite$ -- 33
+duplicate$ -- 1565
+empty$ -- 1557
+format.name$ -- 320
+if$ -- 3764
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 299
+newline$ -- 187
+num.names$ -- 129
+pop$ -- 549
+preamble$ -- 1
+purify$ -- 202
+quote$ -- 0
+skip$ -- 471
+stack$ -- 0
+substring$ -- 818
+swap$ -- 1089
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 267
+warning$ -- 1
+while$ -- 139
+width$ -- 0
+write$ -- 487
+(There were 3 warnings)

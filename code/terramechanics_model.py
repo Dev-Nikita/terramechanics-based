@@ -106,6 +106,35 @@ def traction(alpha, soil, s=None, V=VEH):
     return V["nw"] * V["b"] * l * tau_max * fac
 
 
+def equilibrium_slip(alpha, soil, F_res, V=VEH, s_max=0.90):
+    """Slip at which gross traction balances motion resistance.
+
+    In steady straight-line motion the drawbar pull is zero, so the wheels
+    must develop exactly F_res. Slip is therefore not a free parameter: it is
+    the root of F_x(alpha, s) = F_res. Equation (9) is monotonic in s, so the
+    root is unique and is found by bisection.
+
+    Returning NaN means no root below s_max, i.e. no steady state exists at
+    all. That is PHYSICAL EXISTENCE, and it is weaker than the operational
+    admissibility used in optimum(): because F_x is monotonic in s,
+        K_TR >= 1  <=>  F_x(alpha, s_ref) >= F_res  <=>  s_eq <= s_ref
+    with s_ref = V["s"] the admissible slip limit. A root may exist at a slip
+    above that limit; such a state is excluded from the feasible set.
+    """
+    alpha = np.atleast_1d(np.asarray(alpha, dtype=float))
+    F_res = np.atleast_1d(np.asarray(F_res, dtype=float))
+    lo = np.full_like(alpha, 1e-6)
+    hi = np.full_like(alpha, s_max)
+    feasible = traction(alpha, soil, s=hi, V=V) >= F_res
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        too_low = traction(alpha, soil, s=mid, V=V) < F_res
+        lo = np.where(too_low, mid, lo)
+        hi = np.where(too_low, hi, mid)
+    s_eq = 0.5 * (lo + hi)
+    return np.where(feasible, s_eq, np.nan)
+
+
 def cushion(alpha, V=VEH):
     F_ac = alpha * V["G"]
     dp = F_ac / V["A_ac"]
@@ -124,13 +153,27 @@ def evaluate(alpha, soil, V=VEH):
     F_aero = 0.5 * V["rho_air"] * V["Cd"] * V["S"] * V["v"] ** 2 * np.ones_like(alpha)
     F_res = F_def + F_roll + F_skirt + F_aero
     F_x = traction(alpha, soil, V=V)
-    P_wheel = F_res * V["v"]
-    P_prop = P_wheel / V["eta_dr"]
+
+    # Slip is solved, not prescribed: in steady motion the wheels develop
+    # exactly F_res, and the slip that does so follows from Eq. (9).
+    s_eq = equilibrium_slip(alpha, soil, F_res, V).reshape(np.shape(F_res))
+
+    # The wheel rim advances at v/(1-s); the difference between rim power and
+    # vehicle power is the slip loss, which is dissipated in shearing the soil.
+    v_t = V["v"] / (1.0 - np.clip(s_eq, 0.0, 0.95))
+    P_wheel = F_res * v_t                 # mechanical power at the wheel rim
+    P_slip = F_res * (v_t - V["v"])       # of which this is lost to slip
+    P_prop = P_wheel / V["eta_dr"]        # referred to the powerplant output
     P_tot = P_prop + P_fan
+
+    # Notional demand ignoring the slip loss. Where no equilibrium slip exists
+    # the state is not realizable and only this notional figure can be quoted.
+    P_notional = F_res * V["v"] / V["eta_dr"] + P_fan
     return dict(alpha=alpha, z=z, p=p, F_def=F_def, F_roll=F_roll, F_skirt=F_skirt,
-                F_aero=F_aero, F_res=F_res, F_x=F_x, K=F_x / F_res,
-                dp=dp, Q=Q, P_fan=P_fan, P_wheel=P_wheel, P_prop=P_prop,
-                P_tot=P_tot, E=P_tot / (V["G"] * V["v"]))
+                F_aero=F_aero, F_res=F_res, F_x=F_x, K=F_x / F_res, s_eq=s_eq,
+                dp=dp, Q=Q, P_fan=P_fan, P_wheel=P_wheel, P_slip=P_slip,
+                P_prop=P_prop, P_tot=P_tot, P_notional=P_notional,
+                E=P_tot / (V["G"] * V["v"]))
 
 
 # ----------------------------------------------------------------------
@@ -139,23 +182,33 @@ def evaluate(alpha, soil, V=VEH):
 def optimum(soil, V=VEH, na=9501):
     a = np.linspace(0.0, 0.95, na)
     r = evaluate(a, soil, V)
-    ok_t, ok_z = r["K"] >= 1.0, r["z"] <= V["z_crit"]
+    # ok_t is the operational slip limit: K_TR >= 1 is exactly s_eq <= V["s"]
+    # (monotonicity of F_x in s). It implies a root exists, so the isfinite
+    # test is redundant and is kept only as a guard.
+    ok_t = (r["K"] >= 1.0) & np.isfinite(r["s_eq"])
+    ok_z = r["z"] <= V["z_crit"]
     feas = ok_t & ok_z
     a_trac = float(a[ok_t][0]) if ok_t.any() else None
     a_geom = float(a[ok_z][0]) if ok_z.any() else None
     if not feas.any():
+        exists = np.isfinite(r["s_eq"])
         return dict(a_min=None, a_opt=None, a_trac=a_trac, a_geom=a_geom,
-                    K_max=float(r["K"].max()), P_tot0=float(r["P_tot"][0]))
-    E = np.where(feas, r["E"], np.inf)
+                    a_exists=float(a[exists][0]) if exists.any() else None,
+                    K_max=float(r["K"].max()), P_tot0=float(r["P_notional"][0]))
+    E = np.where(feas & np.isfinite(r["E"]), r["E"], np.inf)
     i = int(np.argmin(E))
     band = a[feas & (r["E"] <= 1.01 * r["E"][i])]
+    exists = np.isfinite(r["s_eq"])
+    a_exists = float(a[exists][0]) if exists.any() else None
     return dict(a_min=float(a[feas][0]), a_trac=a_trac, a_geom=a_geom,
+                a_exists=a_exists,
                 K_max=float(r["K"].max()), a_opt=float(a[i]), E_opt=float(r["E"][i]), K_opt=float(r["K"][i]),
                 z_opt=float(r["z"][i]), P_tot_opt=float(r["P_tot"][i]),
                 P_fan_opt=float(r["P_fan"][i]), P_prop_opt=float(r["P_prop"][i]),
                 band=[float(band.min()), float(band.max())],
+                s_eq_opt=float(r["s_eq"][i]), P_slip_opt=float(r["P_slip"][i]),
                 E0=float(r["E"][0]), K0=float(r["K"][0]), z0=float(r["z"][0]),
-                P_tot0=float(r["P_tot"][0]))
+                P_tot0=float(r["P_notional"][0]))
 
 
 # ----------------------------------------------------------------------
@@ -182,11 +235,23 @@ def verification():
     Fx_cm = V["nw"] * V["b"] * l0 * (soil["c"] + sigma * np.tan(np.radians(soil["phi"])))
     out.append(("s -> inf : F_x -> Coulomb-Mohr limit", Fx_inf, float(Fx_cm),
                 abs(Fx_inf - Fx_cm) / Fx_cm < 1e-3))
+    a_sweep = np.linspace(0.0, 0.95, 1901)
+    rs = evaluate(a_sweep, soil)
+    agree = int(np.sum((rs["K"] >= 1.0) !=
+                       (np.isfinite(rs["s_eq"]) & (rs["s_eq"] <= V["s"]))))
+    out.append(("K_TR >= 1 is exactly s_eq <= s_ref (monotonicity)",
+                float(agree), 0.0, agree == 0))
+
     r = evaluate(0.5, soil)
     lhs = float(r["P_tot"])
-    rhs = float(r["F_res"]) * V["v"] / V["eta_dr"] + float(r["P_fan"])
-    out.append(("energy boundary: P_tot = F_res v / eta_dr + P_fan", lhs, rhs,
+    rhs = (float(r["F_res"]) * V["v"] / ((1.0 - float(r["s_eq"])) * V["eta_dr"])
+           + float(r["P_fan"]))
+    out.append(("energy boundary: P_tot = F_res v/[(1-s_eq) eta_dr] + P_fan", lhs, rhs,
                 abs(lhs - rhs) < 1e-6))
+    r6 = evaluate(0.6, soil)
+    fx_at_seq = float(traction(0.6, soil, s=float(r6["s_eq"])))
+    out.append(("solved slip: F_x(alpha, s_eq) = F_res", fx_at_seq,
+                float(r6["F_res"]), abs(fx_at_seq - float(r6["F_res"])) < 1.0))
     return out
 
 
@@ -383,10 +448,14 @@ def fig_ratio():
 
 
 def fig_power():
+    """Fig. 8: power balance, with the slip loss shown separately."""
     soil = SOILS["Organic soil"]; r = evaluate(a, soil); o = optimum(soil)
-    fig, ax = plt.subplots(figsize=(6.0, 3.8))
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(9.4, 3.6),
+                                  gridspec_kw={"width_ratios": [1.45, 1]})
     ax.plot(a, r["P_prop"]/1e3, lw=1.8, color="#b03030",
-            label=r"$P_{prop}=F_{res}v/\eta_{dr}$")
+            label=r"$P_{prop}=F_{res}v/[(1-s_{eq})\eta_{dr}]$")
+    ax.plot(a, r["P_slip"]/1e3, lw=1.4, ls=(0, (4, 2)), color="#c8811b",
+            label=r"of which slip loss $P_{slip}$")
     ax.plot(a, r["P_fan"]/1e3, lw=1.8, color="#2b6ca3", label=r"$P_{fan}$")
     ax.plot(a, r["P_tot"]/1e3, lw=2.4, color="#2f2f2f", label=r"$P_{tot}$")
     ax.axvspan(o["band"][0], o["band"][1], color="#e2e2e2", alpha=.7)
@@ -395,12 +464,25 @@ def fig_power():
     ax.plot([o["a_opt"]], [o["P_tot_opt"]/1e3], "o", ms=6, color="k")
     ax.annotate(r"$\alpha^{*}$=%.2f, $P_{tot}$=%.1f kW" % (o["a_opt"], o["P_tot_opt"]/1e3),
                 xy=(o["a_opt"], o["P_tot_opt"]/1e3),
-                xytext=(o["a_opt"]+.13, o["P_tot_opt"]/1e3+12), fontsize=8,
+                xytext=(o["a_opt"]-.40, o["P_tot_opt"]/1e3+9), fontsize=8,
                 arrowprops=dict(arrowstyle="->", lw=.8))
     ax.text(o["a_min"]-.01, 55, r"$\alpha_{min}$", fontsize=8, ha="right")
     ax.set_xlabel(r"load-relief fraction $\alpha$ (-)")
-    ax.set_ylabel("power at powerplant input (kW)")
-    ax.set_xlim(0, .9); ax.set_ylim(0, 62); ax.legend(frameon=False)
+    ax.set_ylabel("power at powerplant output (kW)")
+    ax.set_xlim(0, .9); ax.set_ylim(0, 62)
+    ax.legend(frameon=False, fontsize=7.5)
+    ax.set_title("(a) power balance", fontsize=9)
+
+    ax2.plot(a, r["s_eq"], lw=2, color="#4a7a3a")
+    ax2.axvline(o["a_min"], color="k", ls="-.", lw=1.2)
+    ax2.axvline(o["a_opt"], color="k", ls="--", lw=1.2)
+    ax2.plot([o["a_opt"]], [o["s_eq_opt"]], "o", ms=5.5, color="k")
+    ax2.text(o["a_opt"]+.03, o["s_eq_opt"]+.03,
+             r"$s_{eq}$=%.3f" % o["s_eq_opt"], fontsize=8)
+    ax2.set_xlabel(r"load-relief fraction $\alpha$ (-)")
+    ax2.set_ylabel(r"equilibrium slip $s_{eq}$ (-)")
+    ax2.set_xlim(0, .9); ax2.set_ylim(0, .55)
+    ax2.set_title("(b) solved equilibrium slip", fontsize=9)
     save(fig, "fig5_power")
 
 
@@ -535,7 +617,7 @@ if __name__ == "__main__":
 
     print("\n=== RESULTS ===")
     print(f"{'a':>5} {'z,m':>7} {'Fdef':>7} {'Froll':>7} {'Fskirt':>7} {'Fres':>8} "
-          f"{'Fx':>8} {'K':>6} {'Pprop':>7} {'Pfan':>7} {'Ptot':>7}")
+          f"{'Fx':>8} {'K':>6} {'s_eq':>6} {'Pprop':>7} {'Pfan':>7} {'Ptot':>7}")
     rows = {}
     for name, s in SOILS.items():
         rows[name] = []; print(f"-- {name}")
@@ -543,16 +625,21 @@ if __name__ == "__main__":
             r = evaluate(av, s)
             v_ = [av, float(r['z']), float(r['F_def']), float(r['F_roll']),
                   float(r['F_skirt']), float(r['F_res']), float(r['F_x']), float(r['K']),
-                  float(r['P_prop'])/1e3, float(r['P_fan'])/1e3, float(r['P_tot'])/1e3]
+                  float(r['s_eq']), float(r['P_prop'])/1e3, float(r['P_fan'])/1e3,
+                  float(r['P_tot'])/1e3, float(r['P_notional'])/1e3]
             rows[name].append(v_)
+            f = lambda x, w=7, p=2: ("  --  ".rjust(w) if not np.isfinite(x)
+                                     else format(x, f"{w}.{p}f"))
             print(f"{v_[0]:5.2f} {v_[1]:7.3f} {v_[2]:7.0f} {v_[3]:7.0f} {v_[4]:7.0f} "
-                  f"{v_[5]:8.0f} {v_[6]:8.0f} {v_[7]:6.2f} {v_[8]:7.2f} {v_[9]:7.2f} {v_[10]:7.2f}")
+                  f"{v_[5]:8.0f} {v_[6]:8.0f} {v_[7]:6.2f} {f(v_[8],6,3)} "
+                  f"{f(v_[9])} {f(v_[10])} {f(v_[11])}")
 
     print("\n=== OPTIMA ===")
     opts = {}
     for name, s in SOILS.items():
         o = optimum(s); opts[name] = o
-        print(f"  {name:14s} a_trac={o['a_trac']} a_geom={o['a_geom']} a_min={o['a_min']} "
+        print(f"  {name:14s} a_exists={o.get('a_exists')} a_trac={o['a_trac']} "
+              f"a_geom={o['a_geom']} a_min={o['a_min']} "
               f"a*={o['a_opt']:.3f} band={[round(x,3) for x in o['band']]} K*={o['K_opt']:.2f} "
               f"z*={o['z_opt']:.3f} Ptot*={o['P_tot_opt']/1e3:.1f} kW "
               f"(Pfan*={o['P_fan_opt']/1e3:.1f}; a=0: {o['P_tot0']/1e3:.1f} kW, K0={o['K0']:.2f})")

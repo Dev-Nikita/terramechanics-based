@@ -1,0 +1,198 @@
+\begin{thebibliography}{34}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\href}[2]{#2}
+\providecommand{\path}[1]{#1}
+\providecommand{\DOIprefix}{doi:}
+\providecommand{\ArXivprefix}{arXiv:}
+\providecommand{\URLprefix}{URL: }
+\providecommand{\Pubmedprefix}{pmid:}
+\providecommand{\doi}[1]{\href{http://dx.doi.org/#1}{\path{#1}}}
+\providecommand{\Pubmed}[1]{\href{pmid:#1}{\path{#1}}}
+\providecommand{\bibinfo}[2]{#2}
+\ifx\xfnm\relax \def\xfnm[#1]{\unskip,\space#1}\fi
+%Type = Book
+\bibitem[{Amyot(1989)}]{amyot1989}
+\bibinfo{author}{Amyot, J.R.}, \bibinfo{year}{1989}.
+\newblock \bibinfo{title}{Hovercraft Technology, Economics and Applications}.
+\newblock \bibinfo{publisher}{Elsevier}, \bibinfo{address}{Amsterdam}.
+%Type = Book
+\bibitem[{Bekker(1956)}]{bekker1956}
+\bibinfo{author}{Bekker, M.G.}, \bibinfo{year}{1956}.
+\newblock \bibinfo{title}{Theory of Land Locomotion}.
+\newblock \bibinfo{publisher}{University of Michigan Press}, \bibinfo{address}{Ann Arbor}.
+%Type = Book
+\bibitem[{Bekker(1969)}]{bekker1969}
+\bibinfo{author}{Bekker, M.G.}, \bibinfo{year}{1969}.
+\newblock \bibinfo{title}{Introduction to Terrain--Vehicle Systems}.
+\newblock \bibinfo{publisher}{University of Michigan Press}, \bibinfo{address}{Ann Arbor}.
+%Type = Inproceedings
+\bibitem[{Bokhonko and Zinko(2024a)}]{bokhonko2024b}
+\bibinfo{author}{Bokhonko, A.V.}, \bibinfo{author}{Zinko, R.V.}, \bibinfo{year}{2024}a.
+\newblock \bibinfo{title}{Application of vehicles with partial weight relief in military practice}, in: \bibinfo{booktitle}{Employment of Land Forces of the Armed Forces of Ukraine in Contemporary Conflicts}, \bibinfo{address}{Lviv, Ukraine}. pp. \bibinfo{pages}{334--335}.
+\newblock \bibinfo{note}{In Ukrainian}.
+%Type = Inproceedings
+\bibitem[{Bokhonko and Zinko(2024b)}]{bokhonko2024a}
+\bibinfo{author}{Bokhonko, A.V.}, \bibinfo{author}{Zinko, R.V.}, \bibinfo{year}{2024}b.
+\newblock \bibinfo{title}{Reduction of vertical vehicle load as a means of improving its mobility}, in: \bibinfo{booktitle}{Modern Technologies of the Industrial Complex}, \bibinfo{address}{Kherson--Khmelnytskyi, Ukraine}. pp. \bibinfo{pages}{163--164}.
+\newblock \bibinfo{note}{In Ukrainian}.
+%Type = Article
+\bibitem[{Ding et~al.(2011)Ding, Gao, Deng, Nagatani and Yoshida}]{ding2011}
+\bibinfo{author}{Ding, L.}, \bibinfo{author}{Gao, H.}, \bibinfo{author}{Deng, Z.}, \bibinfo{author}{Nagatani, K.}, \bibinfo{author}{Yoshida, K.}, \bibinfo{year}{2011}.
+\newblock \bibinfo{title}{Experimental study and analysis on driving wheels' performance for planetary exploration rovers moving in deformable soil}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{48}, \bibinfo{pages}{27--45}.
+\newblock \DOIprefix\doi{10.1016/j.jterra.2010.08.001}.
+%Type = Article
+\bibitem[{Du et~al.(2017)Du, Gao, Jiang and Zhang}]{du2017}
+\bibinfo{author}{Du, Y.}, \bibinfo{author}{Gao, J.}, \bibinfo{author}{Jiang, L.}, \bibinfo{author}{Zhang, Y.}, \bibinfo{year}{2017}.
+\newblock \bibinfo{title}{Numerical analysis on tractive performance of off-road wheel steering on sand using discrete element method}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{71}, \bibinfo{pages}{25--43}.
+\newblock \DOIprefix\doi{10.1016/j.jterra.2017.02.001}.
+%Type = Article
+\bibitem[{El-Khatib and Hussein(2013)}]{elkhatib2013}
+\bibinfo{author}{El-Khatib, M.M.}, \bibinfo{author}{Hussein, W.M.}, \bibinfo{year}{2013}.
+\newblock \bibinfo{title}{Stabilization and design of a hovercraft intelligent fuzzy controller}.
+\newblock \bibinfo{journal}{International Journal of Engineering Research and Technology} \bibinfo{volume}{2}.
+%Type = Article
+\bibitem[{Gray et~al.(2016)Gray, Vantsevich and Paldan}]{gray2016}
+\bibinfo{author}{Gray, J.P.}, \bibinfo{author}{Vantsevich, V.V.}, \bibinfo{author}{Paldan, J.}, \bibinfo{year}{2016}.
+\newblock \bibinfo{title}{Agile tyre slippage dynamics for radical enhancement of vehicle mobility}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{65}, \bibinfo{pages}{14--37}.
+\newblock \DOIprefix\doi{10.1016/j.jterra.2016.01.002}.
+%Type = Article
+\bibitem[{He et~al.(2020)He, Sandu, Mousavi, Shenvi, Braun, Kruger and Els}]{he2020}
+\bibinfo{author}{He, R.}, \bibinfo{author}{Sandu, C.}, \bibinfo{author}{Mousavi, H.}, \bibinfo{author}{Shenvi, M.N.}, \bibinfo{author}{Braun, K.}, \bibinfo{author}{Kruger, R.}, \bibinfo{author}{Els, P.S.}, \bibinfo{year}{2020}.
+\newblock \bibinfo{title}{Updated standards of the international society for terrain--vehicle systems}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{91}, \bibinfo{pages}{185--231}.
+\newblock \DOIprefix\doi{10.1016/j.jterra.2020.06.007}.
+%Type = Article
+\bibitem[{Hetherington(2001)}]{hetherington2001}
+\bibinfo{author}{Hetherington, J.G.}, \bibinfo{year}{2001}.
+\newblock \bibinfo{title}{The applicability of the {MMP} concept in specifying off-road mobility for wheeled and tracked vehicles}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{38}, \bibinfo{pages}{63--70}.
+\newblock \DOIprefix\doi{10.1016/S0022-4898(00)00010-0}.
+%Type = Article
+\bibitem[{Ishigami et~al.(2007)Ishigami, Miwa, Nagatani and Yoshida}]{ishigami2007}
+\bibinfo{author}{Ishigami, G.}, \bibinfo{author}{Miwa, A.}, \bibinfo{author}{Nagatani, K.}, \bibinfo{author}{Yoshida, K.}, \bibinfo{year}{2007}.
+\newblock \bibinfo{title}{Terramechanics-based model for steering maneuver of planetary exploration rovers on loose soil}.
+\newblock \bibinfo{journal}{Journal of Field Robotics} \bibinfo{volume}{24}, \bibinfo{pages}{233--250}.
+%Type = Inproceedings
+\bibitem[{Janosi and Hanamoto(1961)}]{janosi1961}
+\bibinfo{author}{Janosi, Z.}, \bibinfo{author}{Hanamoto, B.}, \bibinfo{year}{1961}.
+\newblock \bibinfo{title}{The analytical determination of drawbar pull as a function of slip for tracked vehicles in deformable soils}, in: \bibinfo{booktitle}{Proceedings of the 1st International Conference on the Mechanics of Soil--Vehicle Systems}, \bibinfo{address}{Turin, Italy}.
+%Type = Article
+\bibitem[{Karami and Ghasemi(2021)}]{karami2021}
+\bibinfo{author}{Karami, H.}, \bibinfo{author}{Ghasemi, R.}, \bibinfo{year}{2021}.
+\newblock \bibinfo{title}{Adaptive neural observer-based nonsingular super-twisting terminal sliding-mode controller design for a class of hovercraft nonlinear systems}.
+\newblock \bibinfo{journal}{Journal of Marine Science and Application} \bibinfo{volume}{20}, \bibinfo{pages}{325--333}.
+\newblock \DOIprefix\doi{10.1007/s11804-021-00201-6}.
+%Type = Article
+\bibitem[{Lyasko(2010)}]{lyasko2010}
+\bibinfo{author}{Lyasko, M.}, \bibinfo{year}{2010}.
+\newblock \bibinfo{title}{{LSA} model for sinkage predictions}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{47}, \bibinfo{pages}{1--19}.
+%Type = Book
+\bibitem[{MacFarlane(1969)}]{macfarlane1969}
+\bibinfo{editor}{MacFarlane, I.C.} (Ed.), \bibinfo{year}{1969}.
+\newblock \bibinfo{title}{Muskeg Engineering Handbook}.
+\newblock \bibinfo{publisher}{University of Toronto Press}, \bibinfo{address}{Toronto}.
+%Type = Article
+\bibitem[{Meirion-Griffith and Spenko(2011)}]{meirion2011}
+\bibinfo{author}{Meirion-Griffith, G.}, \bibinfo{author}{Spenko, M.}, \bibinfo{year}{2011}.
+\newblock \bibinfo{title}{A modified pressure--sinkage model for small, rigid wheels on deformable terrains}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{48}, \bibinfo{pages}{149--155}.
+%Type = Article
+\bibitem[{Priddy and Willoughby(2006)}]{priddy2006}
+\bibinfo{author}{Priddy, J.D.}, \bibinfo{author}{Willoughby, W.E.}, \bibinfo{year}{2006}.
+\newblock \bibinfo{title}{Clarification of vehicle cone index with reference to mean maximum pressure}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{43}, \bibinfo{pages}{85--96}.
+%Type = Article
+\bibitem[{Reece(1965)}]{reece1965}
+\bibinfo{author}{Reece, A.R.}, \bibinfo{year}{1965}.
+\newblock \bibinfo{title}{Principles of soil--vehicle mechanics}.
+\newblock \bibinfo{journal}{Proceedings of the Institution of Mechanical Engineers, Automobile Division} \bibinfo{volume}{180}, \bibinfo{pages}{45--66}.
+%Type = Article
+\bibitem[{Senatore and Iagnemma(2014)}]{senatore2014}
+\bibinfo{author}{Senatore, C.}, \bibinfo{author}{Iagnemma, K.}, \bibinfo{year}{2014}.
+\newblock \bibinfo{title}{Analysis of stress distributions under lightweight wheeled vehicles}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{51}, \bibinfo{pages}{1--17}.
+\newblock \DOIprefix\doi{10.1016/j.jterra.2013.10.003}.
+%Type = Article
+\bibitem[{Senatore and Sandu(2011)}]{senatore2011}
+\bibinfo{author}{Senatore, C.}, \bibinfo{author}{Sandu, C.}, \bibinfo{year}{2011}.
+\newblock \bibinfo{title}{Torque distribution influence on tractive efficiency and mobility of off-road wheeled vehicles with locked differentials}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{48}, \bibinfo{pages}{372--383}.
+\newblock \DOIprefix\doi{10.1016/j.jterra.2011.06.008}.
+%Type = Techreport
+\bibitem[{Shoop(2001)}]{shoop2001}
+\bibinfo{author}{Shoop, S.A.}, \bibinfo{year}{2001}.
+\newblock \bibinfo{title}{Finite Element Modeling of Tire--Terrain Interaction}.
+\newblock \bibinfo{type}{Technical Report} \bibinfo{number}{ERDC/CRREL TR-01-16}. U.S. Army Cold Regions Research and Engineering Laboratory. \bibinfo{address}{Hanover, NH}.
+%Type = Article
+\bibitem[{Surkutwar et~al.(2024)Surkutwar, Vilsan, Sandu and Untaroiu}]{surkutwar2024}
+\bibinfo{author}{Surkutwar, Y.}, \bibinfo{author}{Vilsan, A.}, \bibinfo{author}{Sandu, C.}, \bibinfo{author}{Untaroiu, C.D.}, \bibinfo{year}{2024}.
+\newblock \bibinfo{title}{Comparative analysis of {FEM} tire--soft snow interaction and a theoretical model based on {Bekker}'s coefficients}.
+\newblock \bibinfo{journal}{IOP Conference Series: Materials Science and Engineering} \bibinfo{volume}{1303}, \bibinfo{pages}{012046}.
+\newblock \DOIprefix\doi{10.1088/1757-899X/1303/1/012046}.
+%Type = Article
+\bibitem[{Taheri et~al.(2015)Taheri, Sandu, Taheri, Pinto and Gorsich}]{taheri2015}
+\bibinfo{author}{Taheri, S.}, \bibinfo{author}{Sandu, C.}, \bibinfo{author}{Taheri, S.}, \bibinfo{author}{Pinto, E.}, \bibinfo{author}{Gorsich, D.}, \bibinfo{year}{2015}.
+\newblock \bibinfo{title}{A technical survey on terramechanics models for tire--terrain interaction used in modeling and simulation of wheeled vehicles}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{57}, \bibinfo{pages}{1--22}.
+\newblock \DOIprefix\doi{10.1016/j.jterra.2014.08.003}.
+%Type = Misc
+\bibitem[{Tarasov et~al.(2026)Tarasov, Bokhonko and Zinko}]{tarasov2026data}
+\bibinfo{author}{Tarasov, N.}, \bibinfo{author}{Bokhonko, A.}, \bibinfo{author}{Zinko, R.}, \bibinfo{year}{2026}.
+\newblock \bibinfo{title}{Source code and numerical data for terramechanics-based evaluation of an air-cushion-assisted wheeled vehicle on deformable terrain}.
+\newblock \URLprefix \url{https://doi.org/10.5281/zenodo.21864835}, \DOIprefix\doi{10.5281/zenodo.21864835}.
+%Type = Article
+\bibitem[{Vantsevich(2008)}]{vantsevich2008}
+\bibinfo{author}{Vantsevich, V.V.}, \bibinfo{year}{2008}.
+\newblock \bibinfo{title}{Power losses and energy efficiency of multi-wheel drive vehicles: a method for evaluation}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{45}, \bibinfo{pages}{89--101}.
+\newblock \DOIprefix\doi{10.1016/j.jterra.2008.08.001}.
+%Type = Article
+\bibitem[{Vella et~al.(2025)Vella, Zerbato, Galvagno and Vigliani}]{vella2025}
+\bibinfo{author}{Vella, A.D.}, \bibinfo{author}{Zerbato, L.}, \bibinfo{author}{Galvagno, E.}, \bibinfo{author}{Vigliani, A.}, \bibinfo{year}{2025}.
+\newblock \bibinfo{title}{Advanced modelling of soft soil--tyre contact for off-road vehicle dynamics simulations}.
+\newblock \bibinfo{journal}{Vehicle System Dynamics} \DOIprefix\doi{10.1080/00423114.2025.2562942}.
+%Type = Article
+\bibitem[{Wismer and Luth(1973)}]{wismer1973}
+\bibinfo{author}{Wismer, R.D.}, \bibinfo{author}{Luth, H.J.}, \bibinfo{year}{1973}.
+\newblock \bibinfo{title}{Off-road traction prediction for wheeled vehicles}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{10}, \bibinfo{pages}{49--61}.
+\newblock \DOIprefix\doi{10.1016/0022-4898(73)90014-1}.
+%Type = Book
+\bibitem[{Wong(2008)}]{wong2008}
+\bibinfo{author}{Wong, J.Y.}, \bibinfo{year}{2008}.
+\newblock \bibinfo{title}{Theory of Ground Vehicles}.
+\newblock \bibinfo{edition}{4th} ed., \bibinfo{publisher}{Wiley}, \bibinfo{address}{New York}.
+%Type = Book
+\bibitem[{Wong(2010)}]{wong2010}
+\bibinfo{author}{Wong, J.Y.}, \bibinfo{year}{2010}.
+\newblock \bibinfo{title}{Terramechanics and Off-Road Vehicle Engineering}.
+\newblock \bibinfo{edition}{2nd} ed., \bibinfo{publisher}{Butterworth--Heinemann}, \bibinfo{address}{Oxford}.
+%Type = Article
+\bibitem[{Wong and Preston-Thomas(1983)}]{wongpt1983}
+\bibinfo{author}{Wong, J.Y.}, \bibinfo{author}{Preston-Thomas, J.}, \bibinfo{year}{1983}.
+\newblock \bibinfo{title}{On the characterization of the shear stress--displacement relationship of terrain}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{19}, \bibinfo{pages}{225--234}.
+\newblock \DOIprefix\doi{10.1016/0022-4898(83)90028-9}.
+%Type = Article
+\bibitem[{Wong et~al.(1982)Wong, Radforth and Preston-Thomas}]{wong1982muskeg}
+\bibinfo{author}{Wong, J.Y.}, \bibinfo{author}{Radforth, J.R.}, \bibinfo{author}{Preston-Thomas, J.}, \bibinfo{year}{1982}.
+\newblock \bibinfo{title}{Some further studies on the mechanical properties of muskeg in relation to vehicle mobility}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{19}, \bibinfo{pages}{107--127}.
+\newblock \DOIprefix\doi{10.1016/0022-4898(82)90015-5}.
+%Type = Article
+\bibitem[{Wong and Reece(1967)}]{wong1967}
+\bibinfo{author}{Wong, J.Y.}, \bibinfo{author}{Reece, A.R.}, \bibinfo{year}{1967}.
+\newblock \bibinfo{title}{Prediction of rigid wheel performance based on the analysis of soil--wheel stresses, {P}art {I}}.
+\newblock \bibinfo{journal}{Journal of Terramechanics} \bibinfo{volume}{4}, \bibinfo{pages}{81--98}.
+%Type = Book
+\bibitem[{Yun and Bliault(2000)}]{yun2000}
+\bibinfo{author}{Yun, L.}, \bibinfo{author}{Bliault, A.}, \bibinfo{year}{2000}.
+\newblock \bibinfo{title}{Theory and Design of Air Cushion Craft}.
+\newblock \bibinfo{publisher}{Arnold}, \bibinfo{address}{London}.
+
+\end{thebibliography}
